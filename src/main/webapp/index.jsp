@@ -48,26 +48,26 @@
 </c:if>
 
 <ul>
-  <li><a href='<%=request.getContextPath()%>/back_end/emp/listAllEmp.jsp'>List</a> all Emps.  <br><br></li>
+  <li>所有管理員<a href='<%=request.getContextPath()%>/adm/listAllAdms.jsp'>"清單"</a><br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-        <b>輸入員工編號 (如7001):</b>
-        <input type="text" name="empno">
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/adm/adm.do" >
+        <b>輸入管理員編號 (如10):</b>
+        <input type="text" name="admno">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+  <jsp:useBean id="admSvc" scope="page" class="com.carshop.adm.model.AdmService" />
    
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-       <b>選擇員工編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/adm/adm.do" >
+       <b>選擇管理員編號:</b>
+       <select size="1" name="admno">
+         <c:forEach var="admVO" items="${admSvc.all}" > 
+          <option value="${admVO.admno}">${admVO.admno}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/adm/adm.do" >
+       <b>選擇管理員姓名:</b>
+       <select size="1" name="admno">
+         <c:forEach var="admVO" items="${admSvc.all}" > 
+          <option value="${admVO.admno}">${admVO.admName}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -90,10 +90,10 @@
 </ul>
 
 
-<h3>員工管理</h3>
+<h3>管理員管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addAdm.jsp'>新增</a> 一位管理員.</li>
 </ul>
 
 </body>
