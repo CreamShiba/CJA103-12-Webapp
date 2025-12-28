@@ -93,7 +93,7 @@
 <h3>管理員管理</h3>
 
 <ul>
-  <li><a href='addAdm.jsp'>新增</a> 一位管理員.</li>
+  <li><a href='<%=request.getContextPath()%>/adm/addAdm.jsp'>新增</a> 一位管理員.</li>
 </ul>
 
 </body>
