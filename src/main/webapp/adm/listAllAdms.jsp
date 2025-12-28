@@ -53,7 +53,7 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>所有管理員資料 - listAllEmp.jsp</h3>
+		 <h3>所有管理員資料 - listAllAdm.jsp</h3>
 		 <h4><a href="<%=request.getContextPath()%>/adm/select_page.jsp"><img src="<%=request.getContextPath()%>/img/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
