@@ -121,10 +121,10 @@ String admName = req.getParameter("admName");
 				
 String admEmail = req.getParameter("admEmail").trim();
 				String admEmailReg = ".*[\u4e00-\u9fa5].*";
-				if (admEmail == null || admEmail.trim().length() == 0) {
+				if (admEmail.trim().matches(admEmailReg)) {
+					errorMsgs.add("信箱不能包含中文");
+				} else if(admEmail == null || admEmail.trim().length() == 0) {
 					errorMsgs.add("信箱請勿空白");
-				} else if(admEmail.trim().matches(admEmailReg)) {
-				    errorMsgs.add("信箱不能包含中文");
 				}
 				
 				java.sql.Date hiredate = null;
@@ -141,21 +141,20 @@ Byte admStatus =  Byte.valueOf(req.getParameter("admStatus").trim());
 				String admAccount = null;
 admAccount = String.valueOf(req.getParameter("admAccount").trim());
 				String admAccountReg = ".*[\u4e00-\u9fa5].*";
-				if (admAccount == null || admAccount.trim().length() <= 7) {
-					errorMsgs.add("帳號請勿空白或長度小於8");
-				} else if(admAccount.trim().matches(admAccountReg)) {
+				if (admAccount.trim().matches(admAccountReg)) {
 					errorMsgs.add("帳號不能包含中文");
+				} else if(admAccount == null || admAccount.trim().length() <= 7) {
+					errorMsgs.add("帳號請勿空白或長度小於8");
 				}
-				
+
 				String admPassword = null;
 admPassword = String.valueOf(req.getParameter("admPassword").trim());
 				String admPasswordReg = ".*[\u4e00-\u9fa5].*";
-				if (admPassword == null || admPassword.trim().length() <= 7 ) {
-					errorMsgs.add("密碼請勿空白或長度小於8");
-				} else if(admPassword.trim().matches(admPasswordReg)) {
+				if (admPassword.trim().matches(admPasswordReg)) {
 					errorMsgs.add("密碼不能包含中文");
+				} else if(admPassword == null || admPassword.trim().length() <= 7 ) {
+					errorMsgs.add("密碼請勿空白或長度小於8");
 				}
-
 
 				AdmVO admVO = new AdmVO();
 				admVO.setAdmno(admno);
@@ -203,7 +202,10 @@ String admName = req.getParameter("admName");
 	            }
 				
 String admEmail = req.getParameter("admEmail").trim();
-				if (admEmail == null || admEmail.trim().length() == 0) {
+				String admEmailReg = ".*[\u4e00-\u9fa5].*";
+				if (admEmail.trim().matches(admEmailReg)) {
+					errorMsgs.add("信箱不能包含中文");
+				} else if(admEmail == null || admEmail.trim().length() == 0) {
 					errorMsgs.add("信箱請勿空白");
 				}
 				
@@ -218,13 +220,19 @@ String admEmail = req.getParameter("admEmail").trim();
 
 				String admAccount = null;
 admAccount = String.valueOf(req.getParameter("admAccount").trim());
-				if (admAccount == null || admAccount.trim().length() <= 7) {
+				String admAccountReg = ".*[\u4e00-\u9fa5].*";
+				if (admAccount.trim().matches(admAccountReg)) {
+					errorMsgs.add("帳號不能包含中文");
+				} else if(admAccount == null || admAccount.trim().length() <= 7) {
 					errorMsgs.add("帳號請勿空白或長度小於8");
 				}
 				
 				String admPassword = null;
 admPassword = String.valueOf(req.getParameter("admPassword").trim());
-				if (admPassword == null || admPassword.trim().length() <= 7) {
+				String admPasswordReg = ".*[\u4e00-\u9fa5].*";
+				if (admPassword.trim().matches(admPasswordReg)) {
+					errorMsgs.add("密碼不能包含中文");
+				} else if(admPassword == null || admPassword.trim().length() <= 7 ) {
 					errorMsgs.add("密碼請勿空白或長度小於8");
 				}
 				
