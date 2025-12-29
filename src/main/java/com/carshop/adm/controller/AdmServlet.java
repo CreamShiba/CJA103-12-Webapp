@@ -282,5 +282,68 @@ req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也�
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 		}
+		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			/***************************1.接收請求參數***************************************/
+			Integer admno = Integer.valueOf(req.getParameter("admno"));
+			
+			/***************************2.開始刪除資料***************************************/
+			AdmService admSvc = new AdmService();
+			admSvc.deleteAdm(admno);
+			
+			/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+			String url = "/adm/listAllAdms.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+			successView.forward(req, res);
+		}
+		
+		if ("getPhoto".equals(action)) { // 來自listAllEmp.jsp
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			/***************************1.接收請求參數***************************************/
+			Integer admno = Integer.valueOf(req.getParameter("admno"));
+			
+			/***************************2.讀取圖片***************************************/
+			res.setContentType("image/jpeg"); 
+	        ServletOutputStream out = res.getOutputStream();
+	        try {
+	            // 3. 呼叫 Service 查詢資料庫
+	            AdmService admSvc = new AdmService();
+	            AdmVO admVO = admSvc.getOneAdm(admno); // 假設您有這個查詢單筆的方法
+
+	            if (admVO != null) {
+	                // 假設您的 VO 存放圖片的 getter 是 getUpfile1() (對應資料庫的 blob/longblob 欄位)
+	                byte[] buf = admVO.getAdmImage(); 
+
+	                // 4. 輸出圖片
+	                if (buf != null && buf.length > 0) {
+	                    out.write(buf);
+	                } else {
+	                    // 如果資料庫內沒有圖片 (null)，可以選擇：
+	                    // A. 什麼都不做 (前端 img 標籤的 onerror 會觸發) -> 推薦
+	                    // B. 讀取一張預設的 "No Image" 圖片寫出
+	                    
+	                    // 這裡示範傳回空結果，讓前端 JS 隱藏圖片
+	                    // res.sendError(HttpServletResponse.SC_NOT_FOUND);
+	                }
+	            }
+	        } catch (Exception e) {
+	            // 發生錯誤時的處理，例如 log 紀錄
+	            // System.out.println(e);
+	        } finally {
+	            // 5. 關閉串流 (雖然 Servlet 容器通常會幫忙關，但自己關是好習慣)
+	            if(out != null) out.close();
+	        }
+	        return;
+		}
 	}
 }

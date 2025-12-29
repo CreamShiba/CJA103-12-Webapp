@@ -10,7 +10,7 @@ public class AdmVO implements java.io.Serializable {
 	private String admEmail;
 	private Byte admStatus;
 	private Date hiredate;
-	private Byte[] admImage;
+	private byte[] admImage;
 
 	public AdmVO() {
 		super();
@@ -72,11 +72,11 @@ public class AdmVO implements java.io.Serializable {
 		this.hiredate = hiredate;
 	}
 
-	public Byte[] getAdmImage() {
+	public byte[] getAdmImage() {
 		return admImage;
 	}
 
-	public void setAdmImage(Byte[] admImage) {
+	public void setAdmImage(byte[] admImage) {
 		this.admImage = admImage;
 	}
 

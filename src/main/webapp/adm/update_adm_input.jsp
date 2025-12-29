@@ -64,11 +64,26 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/adm/adm.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/adm/adm.do" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>管理員編號:<font color=red><b>*</b></font></td>
 		<td><%=admVO.getAdmno()%></td>
+	</tr>
+	<tr>
+		<td>管理員頭像:<font color=red><b>*</b></font></td>
+        <td>
+       		 <div id="preview_area">
+             <img id="blob_holder" 
+                  src="<%=request.getContextPath()%>/adm/adm.do?action=getPhoto&admno=<%=admVO.getAdmno()%>" 
+                  width="120" height="120" 
+                  style="border: 1px solid #ccc; padding: 2px; border-radius: 5px; object-fit: cover;"
+                  onerror="this.style.display='none'" />
+           </div>
+           <br>
+           <span style="font-size:12px; color:gray;">若不修改圖片請勿選擇檔案</span><br>
+           <input type="file" name="upfile1" id="upfile1" accept="image/png, image/jpeg"onchange="previewImage(this)">
+        </td>
 	</tr>
 	<tr>
 		<td>管理員姓名:</td>
@@ -120,7 +135,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
+<script src="<%=request.getContextPath()%>/js/test.js"></script>
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
            width:  300px;   /* width:  300px; */
