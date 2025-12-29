@@ -55,6 +55,7 @@
 
 <table>
 	<tr>
+		<th>管理員頭像</th>
 		<th>管理員編號</th>
 		<th>帳號</th>
 		<th>密碼</th>
@@ -64,6 +65,12 @@
 		<th>狀態</th>
 	</tr>
 	<tr>
+			<td>
+			<img src="${pageContext.request.contextPath}/adm/adm.do?action=getPhoto&admno=${admVO.admno}" 
+			 width="120" height="120"
+			 class="emp-img"
+			 onerror="this.style.display='none'"> 
+		 	</td>
 			<td>${admVO.admno}</td>
 			<td>${admVO.admAccount}</td>
 			<td>${admVO.admPassword}</td>
