@@ -60,6 +60,7 @@
 
 <table>
 	<tr>
+		<th>管理員頭貼</th>
 		<th>管理員編號</th>
 		<th>帳號</th>
 		<th>密碼</th>
@@ -74,6 +75,12 @@
 	<c:forEach var="admVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
+			<td>
+			<img src="${pageContext.request.contextPath}/adm/adm.do?action=getPhoto&admno=${admVO.admno}" 
+			 width="120" height="120"
+			 class="emp-img"
+			 onerror="this.style.display='none'"> 
+		 	</td>
 			<td>${admVO.admno}</td>
 			<td>${admVO.admAccount}</td>
 			<td>${admVO.admPassword}</td>

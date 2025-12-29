@@ -26,7 +26,7 @@ public class AdmService {
 	}
 
 	public AdmVO updateAdm(Integer admno, String admAccount, String admPassword, String admName,
-			String admEmail, java.sql.Date hiredate,Byte admStatus) {
+			String admEmail, java.sql.Date hiredate,Byte admStatus,byte[] admImage) {
 
 		AdmVO admVO = new AdmVO();
 		admVO.setAdmno(admno);
@@ -36,6 +36,7 @@ public class AdmService {
 		admVO.setAdmEmail(admEmail);
 		admVO.setHiredate(hiredate);
 		admVO.setAdmStatus(admStatus);
+		admVO.setAdmImage(admImage);
 		dao.update(admVO);
 
 		return admVO;

@@ -28,15 +28,16 @@ public class Test {
 //		adm.setAdmStatus((byte) 0);
 //		dao.update(adm);
 //		查詢
-//		AdmVO adm = dao.findByPK(12);
-//		System.out.print(adm.getAdmno() + ",");
-//		System.out.print(adm.getAdmName() + ",");
-//		System.out.print(adm.getAdmAccount() + ",");
-//		System.out.print(adm.getAdmPassword() + ",");
-//		System.out.print(adm.getAdmEmail() + ",");
-//		System.out.print(adm.getHiredate() + ",");
-//		System.out.println(adm.getAdmStatus());
-//		System.out.println("---------------------");
+		AdmVO adm = dao.findByPK(31);
+		System.out.print(adm.getAdmno() + ",");
+		System.out.print(adm.getAdmName() + ",");
+		System.out.print(adm.getAdmAccount() + ",");
+		System.out.print(adm.getAdmPassword() + ",");
+		System.out.print(adm.getAdmEmail() + ",");
+		System.out.print(adm.getHiredate() + ",");
+		System.out.println(adm.getAdmStatus());
+		System.out.println(adm.getAdmImage());
+		System.out.println("---------------------");
 //		// 查詢多筆
 //		List<AdmVO> list = dao.getAll();
 //		for (AdmVO adm : list) {

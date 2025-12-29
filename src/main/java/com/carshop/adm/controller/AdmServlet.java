@@ -4,11 +4,12 @@ import java.io.*;
 import java.util.*;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.*;
 
 import com.carshop.adm.model.*;
 
-
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AdmServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -156,6 +157,29 @@ admPassword = String.valueOf(req.getParameter("admPassword").trim());
 					errorMsgs.add("密碼請勿空白或長度小於8");
 				}
 
+				// ========================================================================
+		        // 8. 圖片處理 (新增部分)
+		        // ========================================================================
+		        byte[] admImage = null;
+		        Part part = req.getPart("upfile1"); // 對應 JSP 的 name="upfile1"
+		        
+		        // 為了處理"保留舊圖"，我們需要先實體化 Service
+		        AdmService admSvc = new AdmService(); 
+
+		        if (part != null && part.getSize() > 0) {
+		            // 情況A: 使用者有上傳新圖片 -> 讀取串流
+		            InputStream in = part.getInputStream();
+		            admImage = new byte[in.available()];
+		            in.read(admImage);
+		            in.close();
+		        } else {
+		            // 情況B: 使用者沒有上傳 -> 查出舊資料，填入舊圖片
+		            AdmVO originalVO = admSvc.getOneAdm(admno); // 需確保 Service 有 getOneAdm 方法
+		            if (originalVO != null) {
+		                admImage = originalVO.getAdmImage();
+		            }
+		        }
+				
 				AdmVO admVO = new AdmVO();
 				admVO.setAdmno(admno);
 				admVO.setAdmName(admName);
@@ -164,7 +188,7 @@ admPassword = String.valueOf(req.getParameter("admPassword").trim());
 				admVO.setAdmStatus(admStatus);
 				admVO.setAdmAccount(admAccount);
 				admVO.setAdmPassword(admPassword);
-
+				admVO.setAdmImage(admImage);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -175,8 +199,7 @@ req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也�
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				AdmService admSvc = new AdmService();
-				admVO = admSvc.updateAdm(admno, admAccount, admPassword, admName, admEmail, hiredate, admStatus);
+				admVO = admSvc.updateAdm(admno, admAccount, admPassword, admName, admEmail, hiredate, admStatus, admImage);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("admVO", admVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -303,12 +326,6 @@ req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也�
 		}
 		
 		if ("getPhoto".equals(action)) { // 來自listAllEmp.jsp
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-			
 			/***************************1.接收請求參數***************************************/
 			Integer admno = Integer.valueOf(req.getParameter("admno"));
 			
@@ -333,7 +350,7 @@ req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也�
 	                    // B. 讀取一張預設的 "No Image" 圖片寫出
 	                    
 	                    // 這裡示範傳回空結果，讓前端 JS 隱藏圖片
-	                    // res.sendError(HttpServletResponse.SC_NOT_FOUND);
+	                     res.sendError(HttpServletResponse.SC_NOT_FOUND);
 	                }
 	            }
 	        } catch (Exception e) {

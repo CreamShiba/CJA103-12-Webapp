@@ -17,13 +17,13 @@ public class AdmJDBCDAO implements AdmDAO_interface {
 	private static final String INSERT_STMT = 
 		"INSERT INTO adm (adm_account,adm_password,adm_name,adm_email,hiredate) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT adm_no,adm_account,adm_password,adm_name,adm_email,adm_status,hiredate FROM adm order by adm_no";
+		"SELECT adm_no,adm_account,adm_password,adm_name,adm_email,adm_status,hiredate,adm_image FROM adm order by adm_no";
 	private static final String GET_ONE_STMT = 
-		"SELECT adm_no,adm_account,adm_password,adm_name,adm_email,adm_status,hiredate FROM adm where adm_no = ?";
+		"SELECT adm_no,adm_account,adm_password,adm_name,adm_email,adm_status,hiredate,adm_image FROM adm where adm_no = ?";
 	private static final String DELETE = 
 		"DELETE FROM adm where adm_no = ?";
 	private static final String UPDATE = 
-		"UPDATE adm set adm_account=?, adm_password=?, adm_name=?, adm_email=?, hiredate=? , adm_status=? where adm_no = ?";
+		"UPDATE adm set adm_account=?, adm_password=?, adm_name=?, adm_email=?, hiredate=? , adm_status=?, adm_image=? where adm_no = ?";
 
 	@Override
 	public void insert(AdmVO admVO) {
@@ -91,7 +91,8 @@ public class AdmJDBCDAO implements AdmDAO_interface {
 			pstmt.setString(4, admVO.getAdmEmail());
 			pstmt.setDate(5, admVO.getHiredate());
 			pstmt.setInt(6, admVO.getAdmStatus());
-			pstmt.setInt(7, admVO.getAdmno());
+			pstmt.setBytes(7, admVO.getAdmImage());
+			pstmt.setInt(8, admVO.getAdmno());
 
 			pstmt.executeUpdate();
 
@@ -195,6 +196,7 @@ public class AdmJDBCDAO implements AdmDAO_interface {
 				admVO.setAdmEmail(rs.getString("adm_email"));
 				admVO.setHiredate(rs.getDate("hiredate"));
 				admVO.setAdmStatus(rs.getByte("adm_status"));
+				admVO.setAdmImage(rs.getBytes("adm_image"));
 
 			}
 
@@ -259,6 +261,7 @@ public class AdmJDBCDAO implements AdmDAO_interface {
 				admVO.setAdmEmail(rs.getString("adm_email"));
 				admVO.setHiredate(rs.getDate("hiredate"));
 				admVO.setAdmStatus(rs.getByte("adm_status"));
+				admVO.setAdmImage(rs.getBytes("adm_image"));
 				list.add(admVO); // Store the row in the list
 			}
 
